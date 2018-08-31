@@ -1,15 +1,13 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+  display: flex;
+  flex-flow: column;
+  height: fill;
 }
 
 .App-header {
+  text-align: center;
   background-color: #222;
-  height: 150px;
+  height: 50px;
   padding: 20px;
   color: white;
 }
@@ -20,6 +18,29 @@
 
 .App-intro {
   font-size: large;
+}
+
+.App-room-content {
+  display: flex;
+  flex-flow: row;
+  height: fill;
+}
+
+.availableChatRooms {
+  background-color: lightgrey;
+  width: 20%;
+  height: fill;
+  margin-right: 10px;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.App-room-chat-area {
+  width: 80%;
+  height: fill;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
 }
 
 @keyframes App-logo-spin {
