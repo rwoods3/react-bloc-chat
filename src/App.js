@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import * as firebase from 'firebase';
 import RoomList from './components/RoomList';
+import MessageList from './components/MessageList';
 
 // Initialize Firebase
 var config = {
@@ -15,6 +16,16 @@ var config = {
 firebase.initializeApp(config);
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {activeRoom: undefined, activeRoomName: undefined};
+  }
+
+  handleClickRoom(e) {
+    this.setState({activeRoomKey: e.target.getAttribute('data-room-key'),
+                   activeRoomName: e.target.getAttribute('data-room-name')});
+  }
+
   render() {
     return (
       <div className="App">
@@ -22,11 +33,9 @@ class App extends Component {
           <h1 className="App-title">Bloc Chat</h1>
         </header>
         <section className="App-room-content">
-          <RoomList firebase={firebase}></RoomList>
+          <RoomList activeRoom={this.state.activeRoomKey} handleClickRoom={(e) => this.handleClickRoom(e)} firebase={firebase}></RoomList>
           <section className="App-room-chat-area">
-            <p>test content</p>
-            <p>test content</p>
-            <p>test content</p>
+            <MessageList activeRoom={this.state.activeRoomKey} activeRoomName={this.state.activeRoomName} firebase={firebase}></MessageList>
           </section>
         </section>
       </div>

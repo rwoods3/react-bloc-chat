@@ -39,7 +39,13 @@ class RoomList extends Component {
       <div className="availableChatRooms">
         <h3>Available Chat Rooms</h3>
         {this.state.rooms.map((room) =>
-          <div className="availableRoomItem" key={room.key}>{room.name}</div>
+          <div data-room-key={room.key}
+               data-room-name={room.name}
+               className={'availableRoomItem' + (this.props.activeRoom === room.key ? ' activeRoom' : '')}
+               key={room.key}
+               onClick={this.props.handleClickRoom}>
+               {room.name}
+          </div>
         )}
         <form className="newRoomForm" onSubmit={(e) => this.handleSubmit(e)}>
           <label htmlFor="newRoomTextbox">New Room Name</label>
