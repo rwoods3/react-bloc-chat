@@ -1,7 +1,7 @@
 .App {
   display: flex;
   flex-flow: column;
-  height: fill;
+  height: stretch;
 }
 
 .App-header {
@@ -23,24 +23,38 @@
 .App-room-content {
   display: flex;
   flex-flow: row;
-  height: fill;
+  height: stretch;
+}
+
+.App-room-chat-area {
+  width: 80%;
+  height: stretch;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
 }
 
 .availableChatRooms {
   background-color: lightgrey;
   width: 20%;
-  height: fill;
+  height: stretch;
   margin-right: 10px;
   padding-top: 10px;
   padding-left: 10px;
 }
 
-.App-room-chat-area {
-  width: 80%;
-  height: fill;
-  display: flex;
-  flex-flow: column;
-  justify-content: flex-start;
+.availableChatRooms h3 {
+  margin-top: 5px;
+  text-align: center;
+}
+
+.newRoomForm {
+  margin-top: 15px;
+}
+
+.availableRoomItem {
+  margin-top: 3px;
+  margin-bottom: 3px;
 }
 
 @keyframes App-logo-spin {
