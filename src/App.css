@@ -4,11 +4,14 @@
   height: stretch;
 }
 
-.App-header {
+.App-header h1 {
   text-align: center;
+}
+
+.App-header {
   background-color: #222;
-  height: 50px;
-  padding: 20px;
+  height: 60px;
+  padding: 10px 20px 20px 20px;
   color: white;
 }
 
@@ -60,6 +63,10 @@
 
 .activeRoom {
   background-color: lightblue;
+}
+
+.userLoginButtons {
+  float: right;
 }
 
 @keyframes App-logo-spin {
