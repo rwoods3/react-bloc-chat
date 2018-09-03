@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 
 class User extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleClick(e) {
     if(e.target.value === 'Sign In') {
       const provider = new this.props.firebase.auth.GoogleAuthProvider();

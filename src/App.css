@@ -1,7 +1,6 @@
 .App {
   display: flex;
   flex-flow: column;
-  height: stretch;
 }
 
 .App-header h1 {
@@ -30,6 +29,7 @@
 }
 
 .App-room-chat-area {
+  display: flex;
   width: 80%;
   height: stretch;
   display: flex;
@@ -67,6 +67,40 @@
 
 .userLoginButtons {
   float: right;
+}
+
+.messageList {
+  display: flex;
+  flex-direction: column;
+  height: stretch;
+}
+
+.messageList .chatArea {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+
+.messageList .newMessageArea {
+  display: flex;
+  width: stretch;
+  margin-bottom: 10px;
+  background-color: lightgrey;
+}
+
+.messageList .newMessageArea form {
+  width: 100%;
+}
+
+.newMessageArea input {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.messageRowTime {
+  float: right;
+  margin-right: 20px;
 }
 
 @keyframes App-logo-spin {
