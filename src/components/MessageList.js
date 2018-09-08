@@ -35,7 +35,9 @@ class MessageList extends Component {
         roomId: this.props.activeRoom
       });
       this.setState({newMessage: ''}); // Clear textbox after creating new message
-      this.refs.messageList.scrollIntoView();
+
+      const element = document.querySelector('.chatArea');
+      setTimeout(() => element.scrollTop = element.scrollHeight, 1000);
     }
   }
 
@@ -50,7 +52,11 @@ class MessageList extends Component {
     // Hours part from the timestamp
     const hours = date.getHours();
     // Minutes part from the timestamp
-    const minutes = date.getMinutes();
+    let minutes = date.getMinutes();
+    if(minutes < 10) {
+      minutes = "0" + minutes;
+    }
+
     // Seconds part from the timestamp
     const seconds = date.getSeconds();
 

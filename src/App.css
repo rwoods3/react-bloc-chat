@@ -72,13 +72,18 @@
 .messageList {
   display: flex;
   flex-direction: column;
-  height: stretch;
+  position: absolute;
+  left: 22%;
+  right: 0px;
+  bottom: 5px;
+  top: 75px;
 }
 
 .messageList .chatArea {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  height: 200px;
   overflow-y: scroll;
 }
 
