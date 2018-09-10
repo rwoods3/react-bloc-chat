@@ -17,6 +17,10 @@ class RoomList extends Component {
       room.key = snapshot.key;
       this.setState({ rooms: this.state.rooms.concat( room ) })
     });
+
+    this.roomsRef.on('child_removed', snapshot => {
+      this.setState({rooms: this.state.rooms.filter((room) => room.key !== snapshot.key)});
+    });
   }
 
   handleChange(event) {
@@ -46,6 +50,20 @@ class RoomList extends Component {
     }
   }
 
+  handleDeleteRoom(e, roomKey) {
+    var roomName = this.state.rooms.filter((room) => room.key === roomKey)[0].name;
+
+    this.props.firebase.database().ref("rooms/" + roomKey).remove(() => {
+      // popup toast, yummy
+      var notification = document.querySelector('.mdl-js-snackbar');
+      notification.MaterialSnackbar.showSnackbar(
+        {
+          message: "Removed room " + roomName
+        }
+      );
+    });
+  }
+
   render() {
     return (
       <div className="availableChatRooms mdl-grid mdl-grid--no-spacing">
@@ -57,7 +75,7 @@ class RoomList extends Component {
           {this.state.rooms.map((room) =>
             <div key={room.key + "_room"} className="roomItemContainer mdl-grid mdl-grid--no-spacing">
               <div className="mdl-cell mdl-cell--2-col">
-               <span><i className="material-icons md-18">delete_forever</i></span>
+               <span><i className="material-icons md-18" onClick={(e) => this.handleDeleteRoom(e, room.key)}>delete_forever</i></span>
                <span><i className="material-icons md-18">edit</i></span>
               </div>
               <div data-room-key={room.key}

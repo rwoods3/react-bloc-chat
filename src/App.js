@@ -55,15 +55,6 @@ class App extends Component {
           </div>
         </header>
         <section className="App-room-content mdl-grid mdl-grid--no-spacing">
-        {/*
-          <RoomList activeRoom={this.state.activeRoomKey} handleClickRoom={(e) => this.handleClickRoom(e)} firebase={firebase}></RoomList>
-          <section className="App-room-chat-area">
-            <MessageList activeRoom={this.state.activeRoomKey}
-                         activeRoomName={this.state.activeRoomName}
-                         firebase={firebase}
-                         username={this.state.username}></MessageList>
-          </section>
-          */}
           <aside className="mdl-cell mdl-cell--3-col">
             <RoomList activeRoom={this.state.activeRoomKey} handleClickRoom={(e) => this.handleClickRoom(e)} firebase={firebase}></RoomList>
           </aside>
