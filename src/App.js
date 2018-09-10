@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
+import './RoomList.css';
+import './MessageList.css';
 import * as firebase from 'firebase';
 import RoomList from './components/RoomList';
 import MessageList from './components/MessageList';
@@ -41,13 +43,19 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Bloc Chat</h1>
-          <User firebase={firebase}
-                setUser={(newUser) => this.setUser(newUser)}
-                username={this.state.username} />
+        <header className="mdl-layout__header mdl-layout__header-row is-casting-shadow mdl-grid mdl-grid--no-spacing">
+          <div className="mdl-cell mdl-cell--4-col"></div>
+          <div className="mdl-cell mdl-cell--4-col mdl-cell--middle">
+            <h3>Bloc Chat</h3>
+          </div>
+          <div className="loginButtons mdl-cell mdl-cell--4-col mdl-cell--bottom">
+            <User firebase={firebase}
+                  setUser={(newUser) => this.setUser(newUser)}
+                  username={this.state.username} />
+          </div>
         </header>
-        <section className="App-room-content">
+        <section className="App-room-content mdl-grid mdl-grid--no-spacing">
+        {/*
           <RoomList activeRoom={this.state.activeRoomKey} handleClickRoom={(e) => this.handleClickRoom(e)} firebase={firebase}></RoomList>
           <section className="App-room-chat-area">
             <MessageList activeRoom={this.state.activeRoomKey}
@@ -55,7 +63,22 @@ class App extends Component {
                          firebase={firebase}
                          username={this.state.username}></MessageList>
           </section>
+          */}
+          <aside className="mdl-cell mdl-cell--3-col">
+            <RoomList activeRoom={this.state.activeRoomKey} handleClickRoom={(e) => this.handleClickRoom(e)} firebase={firebase}></RoomList>
+          </aside>
+          <div className="mdl-cell mdl-cell--9-col">
+            <MessageList activeRoom={this.state.activeRoomKey}
+                         activeRoomName={this.state.activeRoomName}
+                         firebase={firebase}
+                         username={this.state.username}></MessageList>
+          </div>
         </section>
+
+        <div aria-live="assertive" aria-atomic="true" aria-relevant="text" className="mdl-snackbar mdl-js-snackbar">
+          <div className="mdl-snackbar__text"></div>
+          <button type="button" className="mdl-snackbar__action"></button>
+        </div>
       </div>
     );
   }

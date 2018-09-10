@@ -30,28 +30,58 @@ class RoomList extends Component {
       this.roomsRef.push({
         name: this.state.newRoomName
       });
-      this.setState({newRoomName: ''}); // Clear textbox after creating new room
+
+      // popup toast, yummy
+      var notification = document.querySelector('.mdl-js-snackbar');
+      notification.MaterialSnackbar.showSnackbar(
+        {
+          message: "Created room " + this.state.newRoomName
+        }
+      );
+
+      // Clear textbox after creating new room
+      this.setState({newRoomName: ''});
+
+      // TODO: fix mdl textbox style, something to do with upgradeElment not working after submit so the label remains hovering above the field
     }
   }
 
   render() {
     return (
-      <div className="availableChatRooms">
-        <h3>Available Chat Rooms</h3>
-        {this.state.rooms.map((room) =>
-          <div data-room-key={room.key}
-               data-room-name={room.name}
-               className={'availableRoomItem' + (this.props.activeRoom === room.key ? ' activeRoom' : '')}
-               key={room.key}
-               onClick={this.props.handleClickRoom}>
-               {room.name}
-          </div>
-        )}
-        <form className="newRoomForm" onSubmit={(e) => this.handleSubmit(e)}>
-          <label htmlFor="newRoomTextbox">New Room Name</label>
-          <input name="newRoomTextbox" type="text" value={this.state.newRoomName} onChange={(e) => this.handleChange(e)} />
-          <input type="submit" value="Create New Room" />
-        </form>
+      <div className="availableChatRooms mdl-grid mdl-grid--no-spacing">
+        <div className="roomsHeader mdl-cell mdl-cell--12-col">
+          <h5>Available Chat Rooms</h5>
+        </div>
+
+        <div className="roomsList mdl-grid mdl-grid--no-spacing">
+          {this.state.rooms.map((room) =>
+            <div key={room.key + "_room"} className="roomItemContainer mdl-grid mdl-grid--no-spacing">
+              <div className="mdl-cell mdl-cell--2-col">
+               <span><i className="material-icons md-18">delete_forever</i></span>
+               <span><i className="material-icons md-18">edit</i></span>
+              </div>
+              <div data-room-key={room.key}
+                   data-room-name={room.name}
+                   className={'mdl-cell mdl-cell--10-col availableRoomItem' + (this.props.activeRoom === room.key ? ' activeRoom' : '')}
+                   key={room.key}
+                   onClick={this.props.handleClickRoom}>
+                   {room.name}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="roomsForm mdl-cell mdl-cell--12-col">
+          <form className="newRoomForm" onSubmit={(e) => this.handleSubmit(e)}>
+            <div className="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <label htmlFor="newRoomTextbox" className="mdl-textfield__label">Enter name of new room...</label>
+              <input name="newRoomTextbox" autoComplete="off" className="mdl-textfield__input" type="text" value={this.state.newRoomName} onChange={(e) => this.handleChange(e)} />
+            </div>
+            <input type="submit"
+                   value="Create Room"
+                   className="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"/>
+          </form>
+        </div>
       </div>
     );
   }

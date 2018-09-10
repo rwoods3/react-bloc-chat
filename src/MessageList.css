@@ -1,0 +1,31 @@
+.noRoomSelected {
+  margin-left: 20px;
+}
+
+.messageList {
+  height: 100%;
+}
+
+.messageRoomHeader {
+  height: 10%;
+}
+
+.chatArea {
+  margin-left: 5px;
+  height: 76%;
+  overflow-y: scroll;
+  width: stretch;
+}
+
+.newMessageArea {
+  width: stretch;
+  height: 14%;
+}
+
+.newMessageArea div {
+  width: 100%;
+}
+
+.messageRowContent {
+  word-wrap: break-word;
+}

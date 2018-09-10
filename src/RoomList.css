@@ -1,0 +1,38 @@
+.availableChatRooms {
+  height: 100%;
+}
+
+.availableRoomItem {
+  padding-left: 5px;
+  margin-bottom: 1px;
+}
+
+.availableRoomItem:hover {
+  cursor: pointer;
+}
+
+.availableRoomItem.activeRoom {
+  background-color: rgb(24,255,255);
+}
+
+.roomsHeader {
+  text-align: center;
+}
+
+.roomsHeader h5 {
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
+
+.roomsList {
+  height: 70%;
+  overflow-y: scroll;
+}
+
+.roomsList i {
+  display: inline;
+}
+
+.roomItemContainer {
+  width: stretch;
+}

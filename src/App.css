@@ -1,114 +1,34 @@
 .App {
   display: flex;
   flex-flow: column;
+  border: 1px solid black;
+  height: stretch;
+  width: stretch;
 }
 
-.App-header h1 {
+header {
+  width: stretch;
+}
+
+header h3 {
   text-align: center;
 }
 
-.App-header {
-  background-color: #222;
-  height: 60px;
-  padding: 10px 20px 20px 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
+.loginButtons {
+  text-align: right;
+  padding-right: 10px;
 }
 
 .App-room-content {
-  display: flex;
-  flex-flow: row;
+  width: stretch;
   height: stretch;
 }
 
-.App-room-chat-area {
-  display: flex;
-  width: 80%;
-  height: stretch;
-  display: flex;
-  flex-flow: column;
-  justify-content: flex-start;
-}
-
-.availableChatRooms {
-  background-color: lightgrey;
-  width: 20%;
-  height: stretch;
-  margin-right: 10px;
-  padding-top: 10px;
+aside {
+  background-color: rgba(158,158,158, .5);
   padding-left: 10px;
 }
 
-.availableChatRooms h3 {
-  margin-top: 5px;
-  text-align: center;
-}
-
-.newRoomForm {
-  margin-top: 15px;
-}
-
-.availableRoomItem {
-  margin-top: 3px;
-  margin-bottom: 3px;
-  cursor: pointer;
-}
-
-.activeRoom {
-  background-color: lightblue;
-}
-
-.userLoginButtons {
-  float: right;
-}
-
-.messageList {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  left: 22%;
-  right: 0px;
-  bottom: 5px;
-  top: 75px;
-}
-
-.messageList .chatArea {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  height: 200px;
-  overflow-y: scroll;
-}
-
-.messageList .newMessageArea {
-  display: flex;
-  width: stretch;
-  margin-bottom: 10px;
-  background-color: lightgrey;
-}
-
-.messageList .newMessageArea form {
-  width: 100%;
-}
-
-.newMessageArea input {
-  width: 100%;
-  background-color: rgba(255, 255, 255, 0.7);
-}
-
-.messageRowTime {
-  float: right;
-  margin-right: 20px;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.mdl-button:hover {
+  background-color: rgba(158,158,158,.5);
 }
