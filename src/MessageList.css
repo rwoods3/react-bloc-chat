@@ -29,3 +29,7 @@
 .messageRowContent {
   word-wrap: break-word;
 }
+
+.editMessageField {
+  width: 98%;
+}

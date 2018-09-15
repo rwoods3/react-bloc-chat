@@ -21,6 +21,15 @@ class RoomList extends Component {
     this.roomsRef.on('child_removed', snapshot => {
       this.setState({rooms: this.state.rooms.filter((room) => room.key !== snapshot.key)});
     });
+
+    this.roomsRef.on('child_changed', snapshot => {
+      /*let changedRoom = this.state.rooms.filter((room) => room.key === snapshot.key)[0];
+      let allRooms = this.state.rooms.filter((room) => room.key !== snapshot.key);
+      changedRoom.name = snapshot.val().name;
+      allRooms.concat(changedRoom);
+      console.log(allRooms);
+      this.setState({rooms: allRooms});*/
+    });
   }
 
   handleChange(event) {
@@ -64,19 +73,33 @@ class RoomList extends Component {
     });
   }
 
+  handleRenameRoom(e, roomKey) {
+    const roomName = this.state.rooms.filter((room) => room.key === roomKey)[0].name;
+    const newRoomName = prompt("Enter new name for room " + roomName, "Change Room");
+
+    if (newRoomName != null) {
+      this.props.firebase.database().ref("rooms/" + roomKey).set({name: newRoomName}, () => {
+        // popup toast, yummy
+        var notification = document.querySelector('.mdl-js-snackbar');
+        notification.MaterialSnackbar.showSnackbar(
+          {
+            message: "Renamed room from \"" + roomName + "\" to \"" + newRoomName + "\""
+          }
+        );
+        window.location.reload();
+      });
+    }
+  }
+
   render() {
     return (
-      <div className="availableChatRooms mdl-grid mdl-grid--no-spacing">
-        <div className="roomsHeader mdl-cell mdl-cell--12-col">
-          <h5>Available Chat Rooms</h5>
-        </div>
-
+      <div className="availableChatRooms mdl-grid mdl-grid--no-spacing mdl-tabs__panel is-active" id="room-panel">
         <div className="roomsList mdl-grid mdl-grid--no-spacing">
           {this.state.rooms.map((room) =>
             <div key={room.key + "_room"} className="roomItemContainer mdl-grid mdl-grid--no-spacing">
               <div className="mdl-cell mdl-cell--2-col">
                <span><i className="material-icons md-18" onClick={(e) => this.handleDeleteRoom(e, room.key)}>delete_forever</i></span>
-               <span><i className="material-icons md-18">edit</i></span>
+               <span><i className="material-icons md-18" onClick={(e) => this.handleRenameRoom(e, room.key)}>edit</i></span>
               </div>
               <div data-room-key={room.key}
                    data-room-name={room.name}

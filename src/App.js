@@ -55,9 +55,18 @@ class App extends Component {
           </div>
         </header>
         <section className="App-room-content mdl-grid mdl-grid--no-spacing">
-          <aside className="mdl-cell mdl-cell--3-col">
-            <RoomList activeRoom={this.state.activeRoomKey} handleClickRoom={(e) => this.handleClickRoom(e)} firebase={firebase}></RoomList>
+          <aside className="mdl-cell mdl-cell--3-col mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+
+                <div className="mdl-tabs__tab-bar">
+                    <a href="#room-panel" className="mdl-tabs__tab is-active">Rooms</a>
+                    <a href="#user-panel" className="mdl-tabs__tab">Users</a>
+                </div>
+
+                  <RoomList activeRoom={this.state.activeRoomKey} handleClickRoom={(e) => this.handleClickRoom(e)} firebase={firebase}></RoomList>
+
+                
           </aside>
+
           <div className="mdl-cell mdl-cell--9-col">
             <MessageList activeRoom={this.state.activeRoomKey}
                          activeRoomName={this.state.activeRoomName}

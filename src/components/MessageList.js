@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
+import EditMessage from './EditMessage.js';
 
 class MessageList extends Component {
   constructor(props) {
     super(props);
-    this.state = {messages: [], newMessage: ''};
+    this.state = {messages: [],
+                  newMessage: '',
+                  editedMessage: '',
+                  originalMessage: '',
+                  editMessageKey: '',
+                  editInProgress: false};
 
     this.messagesRef = this.props.firebase.database().ref('messages');
   }
@@ -13,6 +19,23 @@ class MessageList extends Component {
       const message = snapshot.val();
       message.key = snapshot.key;
       this.setState({ messages: this.state.messages.concat( message ) });
+    });
+
+    this.messagesRef.on('child_removed', snapshot => {
+      this.setState({messages: this.state.messages.filter((message) => message.key !== snapshot.key)});
+    });
+
+    this.messagesRef.on('child_changed', snapshot => {
+      let updatedMessages = this.state.messages.map((message) => {
+        if(message.key === snapshot.key) {
+          return snapshot.val();
+        }
+        else {
+          return message;
+        }
+      });
+
+      this.setState({messages: updatedMessages});
     });
   }
 
@@ -64,10 +87,10 @@ class MessageList extends Component {
     return [date, hours, minutes, seconds];
   }
 
-  renderDeleteIcon(user) {
+  renderDeleteIcon(user, messageKey) {
     // Should only be able to delete our own messages
     if(user !== "Guest" && user === this.props.username) {
-      return <i className="material-icons md-18">remove_circle</i>;
+      return <i className="material-icons md-18" onClick={(e) => this.handleDeleteMessage(e, messageKey)}>remove_circle</i>;
     }
   }
 
@@ -79,7 +102,42 @@ class MessageList extends Component {
     if(this.state.newMessage === '') {
       this.refs.newMessageTextbox.className = 'mdl-textfield mdl-js-textfield mdl-textfield--floating-label';
     }
-    console.log(this.refs.newMessageTextbox.className);
+  }
+
+  handleDeleteMessage(e, messageKey) {
+    this.props.firebase.database().ref("messages/" + messageKey).remove(() => {
+      // popup toast, yummy
+      var notification = document.querySelector('.mdl-js-snackbar');
+      notification.MaterialSnackbar.showSnackbar(
+        {
+          message: "Message Removed"
+        }
+      );
+    });
+  }
+
+  handleEditInProgress(e, messageKey) {
+    const messageOwner = this.state.messages.find((message) => message.key === messageKey).username;
+
+    if(messageOwner === this.props.username) {
+      // will trigger the change from the original message to the EditMessage component
+      this.setState({editMessageKey: messageKey, originalMessage: e.target.innerText, editInProgress: true});
+    }
+  }
+
+  handleEditMessage(editedMessage, messageKey) {
+    let messageInEdit = this.state.messages.find((message) => message.key === messageKey);
+
+    this.props.firebase.database().ref("messages/" + messageKey + "/content").set(editedMessage, () => {
+      this.handleCancelEdit();
+    });
+  }
+
+  handleCancelEdit() {
+    this.setState({editedMessage: '',
+                   originalMessage: '',
+                   editMessageKey: '',
+                   editInProgress: false});
   }
 
   render() {
@@ -109,10 +167,19 @@ class MessageList extends Component {
                          data-sent-at={message.sentAt}
                          className="userMessage mdl-grid mdl-grid--no-spacing">
                       <div className="messageRowUser mdl-cell mdl-cell--2-col">{message.username}:</div>
-                      <div className="messageRowContent mdl-cell mdl-cell--8-col">{message.content}</div>
+                      <div className="messageRowContent mdl-cell mdl-cell--8-col"
+                           onClick={(e) => this.handleEditInProgress(e, message.key)}>{
+                             (this.state.editInProgress && (this.state.editMessageKey === message.key)) ?
+                             <EditMessage messageKey={message.key}
+                                          originalMessage={this.state.originalMessage}
+                                          handleChangeMessage={(editedMessage, messageKey) => this.handleEditMessage(editedMessage, messageKey)}
+                                          handleCancelEdit={() => this.handleCancelEdit()}>{message.content}</EditMessage>
+                              :
+                            message.content}
+                      </div>
                       <div className="messageRowTime mdl-cell mdl-cell--1-col">{this.convertTimestampToTime(message.sentAt)[1] + ":" + this.convertTimestampToTime(message.sentAt)[2]}</div>
                       <div className="messageRowUser mdl-cell mdl-cell--1-col">
-                        <span>{this.renderDeleteIcon(message.username)}</span>
+                        <span>{this.renderDeleteIcon(message.username, message.key)}</span>
                       </div>
                     </div>
                   </div>
