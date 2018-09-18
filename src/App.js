@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import './App.css';
 import './RoomList.css';
 import './MessageList.css';
+import './UserList.css';
 import * as firebase from 'firebase';
 import RoomList from './components/RoomList';
 import MessageList from './components/MessageList';
 import User from './components/User';
+import UserList from './components/UserList.js';
 
 // Initialize Firebase
 var config = {
@@ -23,7 +25,8 @@ class App extends Component {
     super(props);
     this.state = { activeRoom: undefined,
                    activeRoomName: undefined,
-                   username: null };
+                   username: null
+                 };
   }
 
   handleClickRoom(e) {
@@ -33,6 +36,7 @@ class App extends Component {
 
   setUser(newUser) {
     if(newUser !== null) {
+
       this.setState({ username: newUser.displayName });
     }
     else {
@@ -64,7 +68,7 @@ class App extends Component {
 
                   <RoomList activeRoom={this.state.activeRoomKey} handleClickRoom={(e) => this.handleClickRoom(e)} firebase={firebase}></RoomList>
 
-                
+                  <UserList firebase={firebase} />
           </aside>
 
           <div className="mdl-cell mdl-cell--9-col">

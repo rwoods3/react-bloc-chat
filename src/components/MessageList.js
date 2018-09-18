@@ -126,8 +126,6 @@ class MessageList extends Component {
   }
 
   handleEditMessage(editedMessage, messageKey) {
-    let messageInEdit = this.state.messages.find((message) => message.key === messageKey);
-
     this.props.firebase.database().ref("messages/" + messageKey + "/content").set(editedMessage, () => {
       this.handleCancelEdit();
     });
