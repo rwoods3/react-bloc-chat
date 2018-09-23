@@ -36,7 +36,6 @@ class App extends Component {
 
   setUser(newUser) {
     if(newUser !== null) {
-
       this.setState({ username: newUser.displayName });
     }
     else {

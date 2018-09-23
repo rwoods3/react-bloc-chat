@@ -28,7 +28,9 @@ class MessageList extends Component {
     this.messagesRef.on('child_changed', snapshot => {
       let updatedMessages = this.state.messages.map((message) => {
         if(message.key === snapshot.key) {
-          return snapshot.val();
+          const message = snapshot.val();
+          message.key = snapshot.key;
+          return message;
         }
         else {
           return message;
@@ -89,8 +91,8 @@ class MessageList extends Component {
 
   renderDeleteIcon(user, messageKey) {
     // Should only be able to delete our own messages
-    if(user !== "Guest" && user === this.props.username) {
-      return <i className="material-icons md-18" onClick={(e) => this.handleDeleteMessage(e, messageKey)}>remove_circle</i>;
+    if(user === this.props.username) {
+      return <i key={messageKey} className="material-icons md-18" onClick={(e) => this.handleDeleteMessage(e, messageKey)}>remove_circle</i>;
     }
   }
 
@@ -105,6 +107,7 @@ class MessageList extends Component {
   }
 
   handleDeleteMessage(e, messageKey) {
+    console.log("in handleDeleteMessage: messageKey = " + messageKey);
     this.props.firebase.database().ref("messages/" + messageKey).remove(() => {
       // popup toast, yummy
       var notification = document.querySelector('.mdl-js-snackbar');

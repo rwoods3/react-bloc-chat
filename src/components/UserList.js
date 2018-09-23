@@ -16,10 +16,11 @@ class UserList extends Component {
     });
 
     this.userListRef.on('child_changed', snapshot => {
-      const user = snapshot.val();
-      user.key = snapshot.key;
-      
-      //this.setState({ userList: this.state.userList.filter((user) => user ) });
+      const updatedUser = snapshot.val();
+      updatedUser.key = snapshot.key;
+      const userIndex = this.state.userList.findIndex((user) => {return updatedUser.uid === user.uid});
+console.log(this.state.userList.map((user, index) => index === userIndex ? updatedUser : user));
+      this.setState({ userList: this.state.userList.map((user, index) => index === userIndex ? updatedUser : user)});
     });
   }
 
